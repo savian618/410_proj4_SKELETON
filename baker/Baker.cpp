@@ -34,8 +34,10 @@ void Baker::beBaker() {
 	while(true){
 		unique_lock<mutex> lck(mutex_order_inQ);
 		ORDER o;
-
-		while(order_in_Q.size() > 0 && b_WaiterIsFinished == true){
+		if(b_WaiterIsFinished){
+			break;
+		}
+		while(order_in_Q.size() > 0 && !b_WaiterIsFinished){
 			cv_order_inQ.wait(lck);
 
 		}
