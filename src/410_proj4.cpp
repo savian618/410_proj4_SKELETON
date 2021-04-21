@@ -86,7 +86,7 @@ void audit_results() {
 
 int main()
 {
-	thread t_waiter(doWaiter, 9);
+	thread t_waiter(doWaiter, 10, "in1.txt");
 	thread t_baker(doBaker, 1);
 
 	t_waiter.join();

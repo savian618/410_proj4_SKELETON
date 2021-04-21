@@ -26,8 +26,9 @@ int Waiter::getNext(ORDER &anOrder){
 void Waiter::beWaiter() {
 	ORDER o;
 	while(getNext(o) == SUCCESS){
-		lock_guard<mutex> lck(mutex_order_inQ);
+		unique_lock<mutex> lck(mutex_order_inQ);
 		order_in_Q.push(o);
+		cv_order_inQ.notify_all();
 	}
 	b_WaiterIsFinished = true;
 	cv_order_inQ.notify_all();
